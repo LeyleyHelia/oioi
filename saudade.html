@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Perguntinha 💕</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #ffe6f0;
+      overflow: hidden;
+    }
+
+    h1 { color: #992e51; }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #sim { background-color: #4CAF50; color: white; transition: all 0.2s; }
+    #nao { background-color: #f44336; color: white; }
+
+    #resultado { margin-top: 30px; font-size: 20px; }
+
+    img { margin-top: 20px; max-width: 300px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1 id="pergunta">Você está com saudade de mim? 🥺</h1>
+
+  <button id="sim" onclick="primeiroSim()">Sim</button>
+  <button id="nao" onclick="primeiroNao()">Não</button>
+
+  <div id="resultado"></div>
+
+  <audio id="musica" src="musica.mp3"></audio>
+
+  <script>
+    let tentativas = 0;
+    let tamanhoSim = 18;
+    let modoConfirmacao = false;
+
+    function primeiroSim() {
+      // entra no modo "tem certeza"
+      modoConfirmacao = true;
+      document.getElementById("pergunta").innerText = "Tem certeza? 😏";
+
+      const nao = document.getElementById("nao");
+      nao.style.position = "absolute";
+
+      // ativa fuga do botão não
+      nao.setAttribute("onmouseover", "fugir()");
+      nao.setAttribute("ontouchstart", "fugir()");
+
+      // muda ação do botão sim para resposta final
+      document.getElementById("sim").onclick = respostaSim;
+    }
+
+    function primeiroNao() {
+      // clicou NÃO logo de cara → mostra macaco
+      document.getElementById("resultado").innerHTML = `
+        <p>😒</p>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEin3v57UljCI8nB5zWmq107nCWVyqz4rq8d-9mPPeJuDpf5bq97DJtIl3C70mQ7h-LlyFwHLk9Uzro6R-Ik5cr9i4iRISWK3L1MOJ7o2axE4wPK9sUfAhErJIEO1oJr-qdhyphenhyphenAlDIqHKfx0/s1600/gorilla-middle-finger-bob-pitchford-bristol-zoo-3.jpg">
+      `;
+    }
+
+    function fugir() {
+      if (!modoConfirmacao) return;
+
+      tentativas++;
+
+      const nao = document.getElementById("nao");
+      const largura = window.innerWidth - 100;
+      const altura = window.innerHeight - 100;
+
+      const x = Math.random() * largura;
+      const y = Math.random() * altura;
+
+      nao.style.left = x + "px";
+      nao.style.top = y + "px";
+
+      // aumenta botão sim
+      tamanhoSim += 5;
+      const sim = document.getElementById("sim");
+      sim.style.fontSize = tamanhoSim + "px";
+
+      // muda texto
+      const pergunta = document.getElementById("pergunta");
+      if (tentativas === 1) pergunta.innerText = "Tem certeza mesmo? 😏";
+      else if (tentativas === 2) pergunta.innerText = "Sério isso?? 😒";
+      else if (tentativas === 3) pergunta.innerText = "Última chance... 👀";
+      else pergunta.innerText = "Para de tentar clicar no NÃO 😂";
+    }
+
+    function respostaSim() {
+      document.getElementById("resultado").innerHTML = `
+        <p>Pois mostre a pica agora 💖</p>
+        <img src="https://www.cantadascasa.com/images/lines/limao-cantadas-j-chupei-limo-j-chupei-ameixa-s-no-chupei-voc-porq.jpg">
+      `;
+
+      const musica = document.getElementById("musica");
+      musica.play();
+    }
+  </script>
+
+</body>
+</html>
