@@ -41,7 +41,7 @@
 
   <div id="resultado"></div>
 
-  <audio id="musica" src="musica.mp3"></audio>
+  <audio id="musica" src="musica.mp3" preload="auto"></audio>
 
   <script>
     let tentativas = 0;
@@ -106,8 +106,10 @@
         <img src="https://www.cantadascasa.com/images/lines/limao-cantadas-j-chupei-limo-j-chupei-ameixa-s-no-chupei-voc-porq.jpg">
       `;
 
-      const musica = document.getElementById("musica.mp3");
-      musica.mp3.play();
+      const musica = document.getElementById("musica");
+musica.load();
+musica.currentTime = 0;
+musica.play();
     }
   </script>
 
